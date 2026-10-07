@@ -18,7 +18,8 @@ import {
   useSearchParams,
 } from "react-router"
 
-const INSTAGRAM_URL = "https://www.instagram.com/zelisse.jewelry/"
+const INSTAGRAM_URL = "https://www.instagram.com/alfajorina/"
+const FACEBOOK_URL = "https://www.facebook.com/alfajorina"
 const formatPrice = (price: number) =>
   new Intl.NumberFormat("es-ES", {
     style: "currency",
@@ -56,11 +57,11 @@ const translations: Record<Exclude<Language, "es">, Record<string, string>> = {
     "Cuidarte no es un lujo.": "Cuidar-te no és un luxe.",
     "Es volver a": "És tornar a",
     ti: "tu",
-    "En Nou Sol entendemos la estética como un cuidado que empieza escuchándote. Cada piel, cada cuerpo y cada momento necesitan una atención diferente.":
-      "A Nou Sol entenem l'estètica com una cura que comença escoltant-te. Cada pell, cada cos i cada moment necessiten una atenció diferent.",
+    "En Alfajorina entendemos la estética como un cuidado que empieza escuchándote. Cada piel, cada cuerpo y cada momento necesitan una atención diferente.":
+      "A Alfajorina entenem l'estètica com una cura que comença escoltant-te. Cada pell, cada cos i cada moment necessiten una atenció diferent.",
     "Combinamos experiencia, diagnóstico y productos seleccionados para crear rituales sencillos, efectivos y sin prisas, en Sabadell.":
       "Combinem experiència, diagnòstic i productes seleccionats per crear rituals senzills, efectius i sense presses, a Sabadell.",
-    "Conoce Nou Sol": "Coneix Nou Sol",
+    "Conoce Alfajorina": "Coneix Alfajorina",
     "Qué hacemos": "Què fem",
     "Tu piel habla.": "La teva pell parla.",
     escuchamos: "escoltem",
@@ -133,7 +134,7 @@ const translations: Record<Exclude<Language, "es">, Record<string, string>> = {
     Ritual: "Ritual",
     Regalo: "Regal",
     "Rutina facial personalizada": "Rutina facial personalitzada",
-    "Tarjeta regalo Nou Sol": "Targeta regal Nou Sol",
+    "Tarjeta regalo Alfajorina": "Targeta regal Alfajorina",
     "Producto recomendado": "Producte recomanat",
     "Una selección pensada según tu tipo de piel y tus objetivos.":
       "Una selecció pensada segons el teu tipus de pell i els teus objectius.",
@@ -146,7 +147,7 @@ const translations: Record<Exclude<Language, "es">, Record<string, string>> = {
     "¿Buscas algo concreto?": "Busques alguna cosa concreta?",
     "Escríbenos y prepararemos una recomendación para ti.":
       "Escriu-nos i prepararem una recomanació per a tu.",
-    "Hablar con Nou Sol": "Parlar amb Nou Sol",
+    "Hablar con Alfajorina": "Parlar amb Alfajorina",
     "Hablemos de": "Parlem de",
     "Dinos qué necesitas y contactaremos contigo para confirmar tu cita o pedido.":
       "Digues-nos què necessites i contactarem amb tu per confirmar la cita o comanda.",
@@ -196,11 +197,11 @@ const translations: Record<Exclude<Language, "es">, Record<string, string>> = {
     "Cuidarte no es un lujo.": "Self-care is not a luxury.",
     "Es volver a": "It is coming back to",
     ti: "you",
-    "En Nou Sol entendemos la estética como un cuidado que empieza escuchándote. Cada piel, cada cuerpo y cada momento necesitan una atención diferente.":
-      "At Nou Sol, beauty care starts with listening to you. Every skin, body and moment deserves a different approach.",
+    "En Alfajorina entendemos la estética como un cuidado que empieza escuchándote. Cada piel, cada cuerpo y cada momento necesitan una atención diferente.":
+      "At Alfajorina, beauty care starts with listening to you. Every skin, body and moment deserves a different approach.",
     "Combinamos experiencia, diagnóstico y productos seleccionados para crear rituales sencillos, efectivos y sin prisas, en Sabadell.":
       "We combine experience, diagnosis and selected products to create simple, effective and unrushed rituals in Sabadell.",
-    "Conoce Nou Sol": "Discover Nou Sol",
+    "Conoce Alfajorina": "Discover Alfajorina",
     "Qué hacemos": "What we do",
     "Tu piel habla.": "Your skin speaks.",
     escuchamos: "we listen",
@@ -273,7 +274,7 @@ const translations: Record<Exclude<Language, "es">, Record<string, string>> = {
     Ritual: "Ritual",
     Regalo: "Gift",
     "Rutina facial personalizada": "Personalised facial routine",
-    "Tarjeta regalo Nou Sol": "Nou Sol gift card",
+    "Tarjeta regalo Alfajorina": "Alfajorina gift card",
     "Producto recomendado": "Recommended product",
     "Una selección pensada según tu tipo de piel y tus objetivos.":
       "A selection designed around your skin type and goals.",
@@ -286,7 +287,7 @@ const translations: Record<Exclude<Language, "es">, Record<string, string>> = {
     "¿Buscas algo concreto?": "Looking for something specific?",
     "Escríbenos y prepararemos una recomendación para ti.":
       "Write to us and we will prepare a recommendation for you.",
-    "Hablar con Nou Sol": "Talk to Nou Sol",
+    "Hablar con Alfajorina": "Talk to Alfajorina",
     "Hablemos de": "Let's talk about",
     "Dinos qué necesitas y contactaremos contigo para confirmar tu cita o pedido.":
       "Tell us what you need and we will contact you to confirm your appointment or order.",
@@ -326,13 +327,13 @@ const LanguageContext = createContext<LanguageContextValue | null>(null)
 
 function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
-    const saved = localStorage.getItem("zelisse-language")
+    const saved = localStorage.getItem("alfajorina-language")
     return saved === "ca" || saved === "en" ? saved : "es"
   })
 
   const setLanguage = (nextLanguage: Language) => {
     setLanguageState(nextLanguage)
-    localStorage.setItem("zelisse-language", nextLanguage)
+    localStorage.setItem("alfajorina-language", nextLanguage)
   }
 
   useEffect(() => {
@@ -460,7 +461,7 @@ const products = [
   {
     id: "rutina",
     type: "Selección",
-    name: "Tu combinación Zelisse",
+    name: "Tu combinación Alfajorina",
     copy: "Creamos una composición de piezas pensada para tu estilo.",
     image:
       "https://images.unsplash.com/photo-1599458348985-236f9b110da1?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=85&w=1200",
@@ -468,7 +469,7 @@ const products = [
   {
     id: "regalo",
     type: "Regalo",
-    name: "Tarjeta regalo Zelisse",
+    name: "Tarjeta regalo Alfajorina",
     copy: "Regala la libertad de elegir una joya con significado.",
     image:
       "https://images.unsplash.com/photo-1727991053349-7985a6155ff4?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=85&w=1200",
@@ -559,7 +560,7 @@ const CartContext = createContext<CartContextValue | null>(null)
 function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(() => {
     try {
-      return JSON.parse(localStorage.getItem("zelisse-cart") ?? "[]")
+      return JSON.parse(localStorage.getItem("alfajorina-cart") ?? "[]")
     } catch {
       return []
     }
@@ -567,7 +568,7 @@ function CartProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
-    localStorage.setItem("zelisse-cart", JSON.stringify(items))
+    localStorage.setItem("alfajorina-cart", JSON.stringify(items))
   }, [items])
 
   useEffect(() => {
@@ -704,7 +705,7 @@ function InstagramIcon() {
 function Wordmark({ light = false }: { light?: boolean }) {
   return (
     <span className={`wordmark ${light ? "text-paper" : ""}`}>
-      ZELISSE<span>.</span>
+      ALFAJORINA<span>.</span>
     </span>
   )
 }
@@ -867,7 +868,7 @@ function Header() {
                 rel="noreferrer"
                 className="mobile-instagram"
               >
-                @zelisse.jewelry <InstagramIcon />
+                @alfajorina <InstagramIcon />
               </a>
             </div>
           </div>,
@@ -892,7 +893,7 @@ function CartDrawer() {
     )
     .join("\n")
   const whatsappUrl = `https://wa.me/34681129570?text=${encodeURIComponent(
-    `Hola Zelisse, me gustaría realizar este pedido:\n\n${order}\n\nTotal: ${formatPrice(total)}`,
+    `Hola Alfajorina, me gustaría realizar este pedido:\n\n${order}\n\nTotal: ${formatPrice(total)}`,
   )}`
 
   if (!isOpen) return null
@@ -929,7 +930,7 @@ function CartDrawer() {
           <div className="cart-empty">
             <BagIcon />
             <h3>Tu carrito está vacío.</h3>
-            <p>Descubre las piezas Zelisse y guarda aquí tus favoritas.</p>
+            <p>Descubre las piezas Alfajorina y guarda aquí tus favoritas.</p>
             <button onClick={() => setIsOpen(false)} className="text-link">
               Seguir descubriendo <ArrowIcon />
             </button>
@@ -1010,6 +1011,9 @@ function Footer() {
           <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
             Instagram
           </a>
+          <a href={FACEBOOK_URL} target="_blank" rel="noreferrer">
+            Facebook
+          </a>
         </nav>
         <a
           className="footer-instagram"
@@ -1021,8 +1025,8 @@ function Footer() {
         </a>
       </div>
       <div className="footer-bottom">
-        <span>© {new Date().getFullYear()} Zelisse Jewelry</span>
-        <span>Joyas para guardar historias · Granollers</span>
+        <span>© {new Date().getFullYear()} Alfajorina</span>
+        <span>Detalles con carácter · Granollers</span>
       </div>
     </footer>
   )
@@ -1060,12 +1064,12 @@ function Hero() {
     <section className="hero">
       <img
         src="https://images.unsplash.com/photo-1727791653790-2f2a64a37c7f?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=90&w=2400"
-        alt="Retrato editorial con joyas doradas Zelisse"
+        alt="Retrato editorial con joyas doradas Alfajorina"
         className="hero-image"
       />
       <div className="hero-shade" />
       <div className="hero-brand" aria-hidden="true">
-        ZELISSE
+        ALFAJORINA
       </div>
       <div className="hero-content">
         <div className="hero-topline">
@@ -1090,7 +1094,7 @@ function Hero() {
             />
           </div>
           <div>
-            <span>01 / ZELISSE</span>
+            <span>01 / ALFAJORINA</span>
             <h2>{t("Nueva colección")}</h2>
             <p>{t("Piezas sutiles, carácter propio")}</p>
             <Link to="/servicios">
@@ -1118,7 +1122,7 @@ function Hero() {
           </div>
         </div>
       </div>
-      <span className="hero-index">ZELISSE / GRANOLLERS</span>
+      <span className="hero-index">ALFAJORINA / GRANOLLERS</span>
     </section>
   )
 }
@@ -1166,7 +1170,7 @@ function Introduction({ extended = false }: { extended?: boolean }) {
         <div className="intro-columns">
           <p>
             {t(
-              "En Zelisse creemos en las joyas que se vuelven parte de ti: piezas delicadas, fáciles de llevar y con ese detalle capaz de transformar lo cotidiano.",
+              "En Alfajorina creemos en las joyas que se vuelven parte de ti: piezas delicadas, fáciles de llevar y con ese detalle capaz de transformar lo cotidiano.",
             )}
           </p>
           <p>
@@ -1177,12 +1181,12 @@ function Introduction({ extended = false }: { extended?: boolean }) {
         </div>
         {!extended && (
           <Link to="/nosotras" className="text-link intro-more">
-            {t("Conoce Zelisse")} <ArrowIcon />
+            {t("Conoce Alfajorina")} <ArrowIcon />
           </Link>
         )}
       </div>
       <div className="intro-stamp" aria-hidden="true">
-        <span>ZJ</span>
+        <span>AF</span>
         <small>GRANOLLERS · BCN</small>
       </div>
     </section>
@@ -1310,7 +1314,7 @@ function HomePage() {
       <section className="home-final-cta">
         <p>{t("¿Empezamos?")}</p>
         <Link to="/contacto">
-          {t("Descubre tu próxima joya en")} <em>Zelisse</em>
+          {t("Descubre tu próxima joya en")} <em>Alfajorina</em>
           <ArrowIcon />
         </Link>
       </section>
@@ -1615,7 +1619,7 @@ function PageCta({ label, copy }: { label: string copy: string }) {
       <p className="eyebrow eyebrow--light">{t(label)}</p>
       <h2>{t(copy)}</h2>
       <Link to="/contacto" className="text-link text-link--light">
-        {t("Hablar con Zelisse")} <ArrowIcon />
+        {t("Hablar con Alfajorina")} <ArrowIcon />
       </Link>
     </section>
   )
@@ -1657,7 +1661,7 @@ function ContactForm() {
           <h2>
             {t("Encuentra tu pieza")}
             <br />
-            <em>Zelisse.</em>
+            <em>Alfajorina.</em>
           </h2>
           <p>
             {t(
@@ -1689,7 +1693,7 @@ function ContactForm() {
             <InstagramIcon />
             <span>
               {t("También estamos en")}
-              <strong>@zelisse.jewelry</strong>
+              <strong>@alfajorina</strong>
             </span>
           </a>
         </div>
@@ -1821,7 +1825,7 @@ function NotFoundPage() {
       <span>404</span>
       <h1>Esta joya todavía no forma parte de la colección.</h1>
       <Link to="/" className="text-link">
-        Volver a Zelisse <ArrowIcon />
+        Volver a Alfajorina <ArrowIcon />
       </Link>
     </section>
   )
