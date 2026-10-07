@@ -1,0 +1,964 @@
+[/workspaces/default/code/src/App.tsx#9fe2]
+1:import { useState, useEffect, useRef } from 'react'
+2:
+3:const NAV_ITEMS = [
+4:  { label: 'Publicidad', id: 'publicidad' },
+5:  { label: 'Diseño web', id: 'diseno-web' },
+6:  { label: 'Redes sociales', id: 'redes-sociales' },
+7:]
+8:
+9:const HERO_SLIDES = [
+10:  {
+11:    id: 1,
+12:    title: 'Campaña institucional',
+13:    category: 'Publicidad',
+14:    image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=1600&h=900&fit=crop&auto=format',
+15:    color: '#1a1a2e',
+16:  },
+17:  {
+18:    id: 2,
+19:    title: 'Identidad digital',
+20:    category: 'Diseño web',
+21:    image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1600&h=900&fit=crop&auto=format',
+22:    color: '#0f2027',
+23:  },
+24:  {
+25:    id: 3,
+26:    title: 'Estrategia de contenidos',
+27:    category: 'Redes sociales',
+28:    image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1600&h=900&fit=crop&auto=format',
+29:    color: '#1c0a00',
+30:  },
+31:  {
+32:    id: 4,
+33:    title: 'Campaña de producto',
+34:    category: 'Publicidad',
+35:    image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1600&h=900&fit=crop&auto=format',
+36:    color: '#0d1b2a',
+37:  },
+38:  {
+39:    id: 5,
+40:    title: 'Plataforma e-commerce',
+41:    category: 'Diseño web',
+42:    image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=1600&h=900&fit=crop&auto=format',
+43:    color: '#1a0a2e',
+44:  },
+45:]
+46:
+47:const PROJECTS = [
+48:  {
+49:    id: 1,
+50:    title: 'Gran Campaña Urbana',
+51:    category: 'Publicidad',
+52:    desc: 'Campaña de comunicación para iniciativa municipal de regeneración de barrios.',
+53:    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&auto=format',
+54:    tag: 'Publicidad',
+55:  },
+56:  {
+57:    id: 2,
+58:    title: 'Portal Corporativo',
+59:    category: 'Diseño web',
+60:    desc: 'Diseño y desarrollo de plataforma web para empresa del sector arquitectura.',
+61:    image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&h=600&fit=crop&auto=format',
+62:    tag: 'Diseño web',
+63:  },
+64:  {
+65:    id: 3,
+66:    title: 'Comunidad Digital',
+67:    category: 'Redes sociales',
+68:    desc: 'Estrategia y gestión de redes sociales para fundación cultural.',
+69:    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&h=600&fit=crop&auto=format',
+70:    tag: 'Redes sociales',
+71:  },
+72:  {
+73:    id: 4,
+74:    title: 'Campaña Gastronómica',
+75:    category: 'Publicidad',
+76:    desc: 'Comunicación integral para lanzamiento de colección editorial de cocina.',
+77:    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop&auto=format',
+78:    tag: 'Publicidad',
+79:  },
+80:  {
+81:    id: 5,
+82:    title: 'App de Reservas',
+83:    category: 'Diseño web',
+84:    desc: 'Interfaz de usuario para aplicación de gestión y reservas en línea.',
+85:    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=600&fit=crop&auto=format',
+86:    tag: 'Diseño web',
+87:  },
+88:  {
+89:    id: 6,
+90:    title: 'Marca en Instagram',
+91:    category: 'Redes sociales',
+92:    desc: 'Construcción de presencia y engagement para marca de moda sostenible.',
+93:    image: 'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=800&h=600&fit=crop&auto=format',
+94:    tag: 'Redes sociales',
+95:  },
+96:  {
+97:    id: 7,
+98:    title: 'Campaña Cultural 2024',
+99:    category: 'Publicidad',
+100:    desc: 'Campaña de comunicación para capital de la cultura, gráfica y digital.',
+101:    image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&h=600&fit=crop&auto=format',
+102:    tag: 'Publicidad',
+103:  },
+104:]
+105:
+106:const CLIENTS = [
+107:  'Generalitat', 'Ajuntament', 'Fundació la Caixa', 'Grupo Planeta',
+108:  'Freixenet', 'Penguin', 'Museu d\'Història', 'Observa',
+109:  'H Arquitectes', 'TUS', 'Pallapupas', 'Nudec',
+110:  'Opera Catalunya', 'Grup Cassa', 'Next', 'Badalona',
+111:]
+112:
+113:const SERVICES = [
+114:  {
+115:    id: 'publicidad',
+116:    label: 'Publicidad',
+117:    num: '01',
+118:    headline: 'Creatividad que mueve a la acción',
+119:    body: 'Diseñamos campañas publicitarias que conectan marcas con personas. Desde la estrategia hasta la producción gráfica y digital, trabajamos cada proyecto como si fuera el nuestro.',
+120:    items: ['Campañas gráficas y digitales', 'Publicidad exterior', 'Comunicación institucional', 'Estrategia creativa', 'Producción audiovisual', 'Branded content'],
+121:    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&h=700&fit=crop&auto=format',
+122:  },
+123:  {
+124:    id: 'diseno-web',
+125:    label: 'Diseño web',
+126:    num: '02',
+127:    headline: 'Experiencias digitales con propósito',
+128:    body: 'Creamos sitios web y plataformas digitales que funcionan y que enamoran. Unimos diseño de interfaz, experiencia de usuario y desarrollo front-end en un mismo equipo.',
+129:    items: ['UX/UI design', 'Desarrollo web', 'E-commerce', 'Aplicaciones web', 'Optimización SEO', 'Mantenimiento y soporte'],
+130:    image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=900&h=700&fit=crop&auto=format',
+131:  },
+132:  {
+133:    id: 'redes-sociales',
+134:    label: 'Redes sociales',
+135:    num: '03',
+136:    headline: 'Presencia digital que genera comunidad',
+137:    body: 'Gestionamos la presencia de tu marca en redes sociales con estrategia, contenido propio y análisis continuo. Construimos comunidades reales alrededor de lo que haces.',
+138:    items: ['Estrategia de contenidos', 'Community management', 'Creación de contenido', 'Campañas de paid social', 'Analítica y reporting', 'Influencer marketing'],
+139:    image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=900&h=700&fit=crop&auto=format',
+140:  },
+141:]
+142:
+143:function Nav({ activeSection }: { activeSection: string }) {
+144:  const [menuOpen, setMenuOpen] = useState(false)
+145:  const [scrolled, setScrolled] = useState(false)
+146:
+147:  useEffect(() => {
+148:    const onScroll = () => setScrolled(window.scrollY > 40)
+149:    window.addEventListener('scroll', onScroll)
+150:    return () => window.removeEventListener('scroll', onScroll)
+151:  }, [])
+152:
+153:  const scrollTo = (id: string) => {
+154:    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+155:    setMenuOpen(false)
+156:  }
+157:
+158:  return (
+159:    <>
+160:      <header
+161:        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+162:        style={{
+163:          background: scrolled ? 'rgba(248,247,243,0.96)' : 'transparent',
+164:          backdropFilter: scrolled ? 'blur(12px)' : 'none',
+165:          borderBottom: scrolled ? '1px solid var(--color-border)' : 'none',
+166:        }}
+167:      >
+168:        <div className="max-w-screen-xl mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
+169:          {/* Logo */}
+170:          <button
+171:            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+172:            className="font-display font-700 text-xl tracking-tight transition-opacity hover:opacity-60"
+173:            style={{ fontFamily: 'var(--font-display)', fontWeight: 700, color: scrolled ? 'var(--color-ink)' : '#fff' }}
+174:          >
+175:            Estudio
+176:          </button>
+177:
+178:          {/* Desktop nav */}
+179:          <nav className="hidden md:flex items-center gap-8">
+180:            {NAV_ITEMS.map(item => (
+181:              <button
+182:                key={item.id}
+183:                onClick={() => scrollTo(item.id)}
+184:                className="text-sm font-medium tracking-wide transition-all duration-200 relative group"
+185:                style={{ color: scrolled ? (activeSection === item.id ? 'var(--color-accent)' : 'var(--color-ink)') : '#fff' }}
+186:              >
+187:                {item.label}
+188:                <span
+189:                  className="absolute -bottom-0.5 left-0 h-px transition-all duration-300"
+190:                  style={{
+191:                    width: activeSection === item.id ? '100%' : '0%',
+192:                    background: scrolled ? 'var(--color-accent)' : '#fff',
+193:                  }}
+194:                />
+195:              </button>
+196:            ))}
+197:            <button
+198:              onClick={() => scrollTo('contacto')}
+199:              className="text-sm font-medium px-5 py-2 transition-all duration-200"
+200:              style={{
+201:                border: `1px solid ${scrolled ? 'var(--color-ink)' : '#fff'}`,
+202:                color: scrolled ? 'var(--color-ink)' : '#fff',
+203:                background: 'transparent',
+204:              }}
+205:              onMouseEnter={e => {
+206:                e.currentTarget.style.background = scrolled ? 'var(--color-ink)' : '#fff'
+207:                e.currentTarget.style.color = scrolled ? '#fff' : 'var(--color-ink)'
+208:              }}
+209:              onMouseLeave={e => {
+210:                e.currentTarget.style.background = 'transparent'
+211:                e.currentTarget.style.color = scrolled ? 'var(--color-ink)' : '#fff'
+212:              }}
+213:            >
+214:              Contacto
+215:            </button>
+216:          </nav>
+217:
+218:          {/* Hamburger */}
+219:          <button
+220:            className="md:hidden flex flex-col gap-1.5 p-2"
+221:            onClick={() => setMenuOpen(v => !v)}
+222:            aria-label="Menú"
+223:          >
+224:            {[0, 1, 2].map(i => (
+225:              <span
+226:                key={i}
+227:                className="block w-6 h-px transition-all duration-300"
+228:                style={{ background: scrolled ? 'var(--color-ink)' : '#fff' }}
+229:              />
+230:            ))}
+231:          </button>
+232:        </div>
+233:      </header>
+234:
+235:      {/* Mobile menu */}
+236:      <div
+237:        className="fixed inset-0 z-40 flex flex-col justify-center px-8 transition-all duration-500"
+238:        style={{
+239:          background: 'var(--color-ink)',
+240:          opacity: menuOpen ? 1 : 0,
+241:          pointerEvents: menuOpen ? 'all' : 'none',
+242:          transform: menuOpen ? 'translateX(0)' : 'translateX(100%)',
+243:        }}
+244:      >
+245:        <button
+246:          className="absolute top-5 right-6 text-white text-3xl font-light"
+247:          onClick={() => setMenuOpen(false)}
+248:        >×</button>
+249:        <nav className="flex flex-col gap-8">
+250:          {NAV_ITEMS.map(item => (
+251:            <button
+252:              key={item.id}
+253:              onClick={() => scrollTo(item.id)}
+254:              className="text-left text-4xl font-display font-300 text-white transition-opacity hover:opacity-60"
+255:              style={{ fontFamily: 'var(--font-display)', fontWeight: 300 }}
+256:            >
+257:              {item.label}
+258:            </button>
+259:          ))}
+260:          <button
+261:            onClick={() => scrollTo('contacto')}
+262:            className="text-left text-4xl font-display font-300 transition-opacity hover:opacity-60"
+263:            style={{ fontFamily: 'var(--font-display)', fontWeight: 300, color: 'var(--color-accent)' }}
+264:          >
+265:            Contacto
+266:          </button>
+267:        </nav>
+268:      </div>
+269:    </>
+270:  )
+271:}
+272:
+273:function HeroSlider() {
+274:  const [current, setCurrent] = useState(0)
+275:  const [animating, setAnimating] = useState(false)
+276:  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+277:
+278:  const goTo = (idx: number) => {
+279:    if (animating) return
+280:    setAnimating(true)
+281:    setTimeout(() => {
+282:      setCurrent(idx)
+283:      setAnimating(false)
+284:    }, 400)
+285:  }
+286:
+287:  useEffect(() => {
+288:    timerRef.current = setInterval(() => {
+289:      setCurrent(c => (c + 1) % HERO_SLIDES.length)
+290:    }, 5000)
+291:    return () => { if (timerRef.current) clearInterval(timerRef.current) }
+292:  }, [])
+293:
+294:  const slide = HERO_SLIDES[current]
+295:
+296:  return (
+297:    <section className="relative h-screen min-h-[600px] overflow-hidden">
+298:      {/* Background */}
+299:      <div
+300:        className="absolute inset-0 transition-opacity duration-700"
+301:        style={{ opacity: animating ? 0 : 1 }}
+302:      >
+303:        <img
+304:          src={slide.image}
+305:          alt={slide.title}
+306:          className="w-full h-full object-cover"
+307:        />
+308:        <div
+309:          className="absolute inset-0"
+310:          style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.65) 100%)' }}
+311:        />
+312:      </div>
+313:
+314:      {/* Content */}
+315:      <div className="relative z-10 h-full flex flex-col justify-end px-6 lg:px-24 pb-24">
+316:        <div
+317:          className="transition-all duration-500"
+318:          style={{ opacity: animating ? 0 : 1, transform: animating ? 'translateY(16px)' : 'translateY(0)' }}
+319:        >
+320:          <span
+321:            className="inline-block text-xs font-medium tracking-[0.2em] uppercase mb-4 px-3 py-1"
+322:            style={{ background: 'var(--color-accent)', color: '#fff' }}
+323:          >
+324:            {slide.category}
+325:          </span>
+326:          <h1
+327:            className="text-white text-5xl sm:text-7xl lg:text-8xl leading-none mb-6 max-w-3xl"
+328:            style={{ fontFamily: 'var(--font-display)', fontWeight: 300 }}
+329:          >
+330:            {slide.title}
+331:          </h1>
+332:        </div>
+333:
+334:        {/* Slide indicators */}
+335:        <div className="flex items-center gap-3 mt-8">
+336:          {HERO_SLIDES.map((_, i) => (
+337:            <button
+338:              key={i}
+339:              onClick={() => goTo(i)}
+340:              className="transition-all duration-300"
+341:              style={{
+342:                width: i === current ? '48px' : '24px',
+343:                height: '2px',
+344:                background: i === current ? '#fff' : 'rgba(255,255,255,0.4)',
+345:              }}
+346:              aria-label={`Slide ${i + 1}`}
+347:            />
+348:          ))}
+349:          <span className="ml-4 text-white/50 text-sm font-medium">
+350:            {String(current + 1).padStart(2, '0')} / {String(HERO_SLIDES.length).padStart(2, '0')}
+351:          </span>
+352:        </div>
+353:      </div>
+354:
+355:      {/* Scroll hint */}
+356:      <div className="absolute bottom-8 right-8 flex flex-col items-center gap-2 z-10">
+357:        <span className="text-white/50 text-xs tracking-[0.15em] uppercase" style={{ writingMode: 'vertical-rl' }}>Scroll</span>
+358:        <div className="w-px h-12 bg-white/20 relative overflow-hidden">
+359:          <div
+360:            className="absolute top-0 left-0 w-full bg-white/60"
+361:            style={{ height: '40%', animation: 'scrollLine 2s ease-in-out infinite' }}
+362:          />
+363:        </div>
+364:      </div>
+365:
+366:      <style>{`
+367:        @keyframes scrollLine {
+368:          0% { transform: translateY(-100%); }
+369:          100% { transform: translateY(350%); }
+370:        }
+371:      `}</style>
+372:    </section>
+373:  )
+374:}
+375:
+376:function AboutBlock() {
+377:  return (
+378:    <section className="py-32 px-6 lg:px-24 max-w-screen-xl mx-auto">
+379:      <div className="grid lg:grid-cols-2 gap-16 items-center">
+380:        <div>
+381:          <p
+382:            className="text-xs tracking-[0.25em] uppercase mb-8"
+383:            style={{ color: 'var(--color-accent)' }}
+384:          >
+385:            Quiénes somos
+386:          </p>
+387:          <h2
+388:            className="text-4xl sm:text-5xl lg:text-6xl leading-tight mb-8"
+389:            style={{ fontFamily: 'var(--font-display)', fontWeight: 300 }}
+390:          >
+391:            Somos acción.<br />
+392:            <em>Somos creación.</em>
+393:          </h2>
+394:          <p className="text-base leading-relaxed mb-6 max-w-md" style={{ color: 'var(--color-muted)' }}>
+395:            Un equipo multidisciplinar de creativos, diseñadores, programadores y expertos en comunicación que trabaja para que tu marca ocupe el espacio que merece.
+396:          </p>
+397:          <p className="text-base leading-relaxed max-w-md" style={{ color: 'var(--color-muted)' }}>
+398:            Combinamos estrategia, diseño y tecnología para ofrecer soluciones que van más allá de lo visual: comunicamos, conectamos y movemos a la acción.
+399:          </p>
+400:        </div>
+401:        <div className="grid grid-cols-3 gap-4">
+402:          {[
+403:            { num: '+200', label: 'Proyectos completados' },
+404:            { num: '15', label: 'Años de experiencia' },
+405:            { num: '+80', label: 'Clientes activos' },
+406:          ].map(stat => (
+407:            <div
+408:              key={stat.num}
+409:              className="flex flex-col gap-2 p-6"
+410:              style={{ border: '1px solid var(--color-border)' }}
+411:            >
+412:              <span
+413:                className="text-3xl lg:text-4xl leading-none"
+414:                style={{ fontFamily: 'var(--font-display)', fontWeight: 700, color: 'var(--color-accent)' }}
+415:              >
+416:                {stat.num}
+417:              </span>
+418:              <span className="text-xs leading-tight" style={{ color: 'var(--color-muted)' }}>{stat.label}</span>
+419:            </div>
+420:          ))}
+421:        </div>
+422:      </div>
+423:    </section>
+424:  )
+425:}
+426:
+427:function ProjectsGrid() {
+428:  const [filter, setFilter] = useState('Todos')
+429:  const [hoveredId, setHoveredId] = useState<number | null>(null)
+430:  const filters = ['Todos', 'Publicidad', 'Diseño web', 'Redes sociales']
+431:  const filtered = filter === 'Todos' ? PROJECTS : PROJECTS.filter(p => p.tag === filter)
+432:
+433:  return (
+434:    <section className="py-24 px-6 lg:px-24 max-w-screen-xl mx-auto">
+435:      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
+436:        <h2
+437:          className="text-3xl sm:text-4xl leading-tight"
+438:          style={{ fontFamily: 'var(--font-display)', fontWeight: 300 }}
+439:        >
+440:          Proyectos destacados
+441:        </h2>
+442:        <div className="flex flex-wrap gap-2">
+443:          {filters.map(f => (
+444:            <button
+445:              key={f}
+446:              onClick={() => setFilter(f)}
+447:              className="px-4 py-1.5 text-sm font-medium transition-all duration-200"
+448:              style={{
+449:                background: filter === f ? 'var(--color-ink)' : 'transparent',
+450:                color: filter === f ? '#fff' : 'var(--color-muted)',
+451:                border: `1px solid ${filter === f ? 'var(--color-ink)' : 'var(--color-border)'}`,
+452:              }}
+453:            >
+454:              {f}
+455:            </button>
+456:          ))}
+457:        </div>
+458:      </div>
+459:
+460:      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: 'var(--color-border)' }}>
+461:        {filtered.map((project, i) => (
+462:          <div
+463:            key={project.id}
+464:            className="relative overflow-hidden cursor-pointer group"
+465:            style={{ background: 'var(--color-paper)', aspectRatio: i === 0 ? '16/10' : '4/3' }}
+466:            onMouseEnter={() => setHoveredId(project.id)}
+467:            onMouseLeave={() => setHoveredId(null)}
+468:          >
+469:            <img
+470:              src={project.image}
+471:              alt={project.title}
+472:              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+473:            />
+474:            {/* Overlay */}
+475:            <div
+476:              className="absolute inset-0 flex flex-col justify-end p-6 transition-all duration-400"
+477:              style={{
+478:                background: hoveredId === project.id
+479:                  ? 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)'
+480:                  : 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)',
+481:              }}
+482:            >
+483:              <span
+484:                className="text-xs font-medium tracking-[0.15em] uppercase mb-2 transition-all duration-300"
+485:                style={{
+486:                  color: 'var(--color-accent)',
+487:                  opacity: hoveredId === project.id ? 1 : 0,
+488:                  transform: hoveredId === project.id ? 'translateY(0)' : 'translateY(8px)',
+489:                }}
+490:              >
+491:                {project.tag}
+492:              </span>
+493:              <h3
+494:                className="text-white text-xl leading-tight mb-2"
+495:                style={{ fontFamily: 'var(--font-display)', fontWeight: 400 }}
+496:              >
+497:                {project.title}
+498:              </h3>
+499:              <p
+500:                className="text-white/70 text-sm leading-relaxed transition-all duration-300"
+501:                style={{
+502:                  maxHeight: hoveredId === project.id ? '60px' : '0',
+503:                  opacity: hoveredId === project.id ? 1 : 0,
+504:                  overflow: 'hidden',
+505:                }}
+506:              >
+507:                {project.desc}
+508:              </p>
+509:            </div>
+510:          </div>
+511:        ))}
+512:      </div>
+513:
+514:      <div className="mt-12 text-center">
+515:        <button
+516:          className="text-sm font-medium tracking-wide px-8 py-3 transition-all duration-200"
+517:          style={{ border: '1px solid var(--color-ink)', color: 'var(--color-ink)' }}
+518:          onMouseEnter={e => {
+519:            e.currentTarget.style.background = 'var(--color-ink)'
+520:            e.currentTarget.style.color = '#fff'
+521:          }}
+522:          onMouseLeave={e => {
+523:            e.currentTarget.style.background = 'transparent'
+524:            e.currentTarget.style.color = 'var(--color-ink)'
+525:          }}
+526:        >
+527:          Ver todos los proyectos
+528:        </button>
+529:      </div>
+530:    </section>
+531:  )
+532:}
+533:
+534:function ServicesSection() {
+535:  const [active, setActive] = useState(0)
+536:  const svc = SERVICES[active]
+537:
+538:  return (
+539:    <section className="py-32 overflow-hidden" style={{ background: 'var(--color-ink)', color: '#fff' }}>
+540:      <div className="max-w-screen-xl mx-auto px-6 lg:px-24">
+541:        <p
+542:          className="text-xs tracking-[0.25em] uppercase mb-12"
+543:          style={{ color: 'var(--color-accent)' }}
+544:        >
+545:          Servicios
+546:        </p>
+547:
+548:        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
+549:          {/* Left: tab list */}
+550:          <div className="flex flex-col">
+551:            {SERVICES.map((s, i) => (
+552:              <button
+553:                key={s.id}
+554:                id={s.id}
+555:                onClick={() => setActive(i)}
+556:                className="group flex items-start gap-6 py-8 text-left transition-all duration-300"
+557:                style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}
+558:              >
+559:                <span
+560:                  className="text-xs font-medium mt-1 transition-colors duration-300 w-6 shrink-0"
+561:                  style={{ color: active === i ? 'var(--color-accent)' : 'rgba(255,255,255,0.3)' }}
+562:                >
+563:                  {s.num}
+564:                </span>
+565:                <div className="flex-1">
+566:                  <h3
+567:                    className="text-2xl sm:text-3xl leading-tight mb-0 transition-all duration-300"
+568:                    style={{
+569:                      fontFamily: 'var(--font-display)',
+570:                      fontWeight: 300,
+571:                      color: active === i ? '#fff' : 'rgba(255,255,255,0.4)',
+572:                    }}
+573:                  >
+574:                    {s.label}
+575:                  </h3>
+576:                  <div
+577:                    className="overflow-hidden transition-all duration-500"
+578:                    style={{ maxHeight: active === i ? '200px' : '0' }}
+579:                  >
+580:                    <p className="text-sm leading-relaxed mt-4 text-white/60">
+581:                      {s.body}
+582:                    </p>
+583:                    <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-1">
+584:                      {s.items.map(item => (
+585:                        <li key={item} className="text-xs text-white/40 flex items-center gap-2">
+586:                          <span style={{ color: 'var(--color-accent)' }}>—</span> {item}
+587:                        </li>
+588:                      ))}
+589:                    </ul>
+590:                  </div>
+591:                </div>
+592:              </button>
+593:            ))}
+594:          </div>
+595:
+596:          {/* Right: image */}
+597:          <div className="hidden lg:block relative" style={{ minHeight: '500px' }}>
+598:            <div
+599:              className="absolute inset-0 transition-opacity duration-500 overflow-hidden"
+600:              key={active}
+601:            >
+602:              <img
+603:                src={svc.image}
+604:                alt={svc.label}
+605:                className="w-full h-full object-cover"
+606:                style={{ filter: 'brightness(0.7) saturate(0.8)' }}
+607:              />
+608:              <div className="absolute bottom-0 left-0 right-0 h-1/2"
+609:                style={{ background: 'linear-gradient(to top, var(--color-ink), transparent)' }} />
+610:            </div>
+611:          </div>
+612:        </div>
+613:      </div>
+614:    </section>
+615:  )
+616:}
+617:
+618:function ClientsStrip() {
+619:  const doubled = [...CLIENTS, ...CLIENTS]
+620:  return (
+621:    <section className="py-20" style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)' }}>
+622:      <p className="text-center text-xs tracking-[0.25em] uppercase mb-12" style={{ color: 'var(--color-muted)' }}>
+623:        Clientes que confían en nosotros
+624:      </p>
+625:      <div className="relative overflow-hidden">
+626:        <div
+627:          className="flex gap-12 whitespace-nowrap"
+628:          style={{ animation: 'marquee 24s linear infinite' }}
+629:        >
+630:          {doubled.map((c, i) => (
+631:            <span
+632:              key={i}
+633:              className="text-sm font-medium uppercase tracking-[0.1em] shrink-0"
+634:              style={{ color: 'var(--color-muted)' }}
+635:            >
+636:              {c}
+637:            </span>
+638:          ))}
+639:        </div>
+640:      </div>
+641:      <style>{`
+642:        @keyframes marquee {
+643:          from { transform: translateX(0); }
+644:          to { transform: translateX(-50%); }
+645:        }
+646:      `}</style>
+647:    </section>
+648:  )
+649:}
+650:
+651:function ValuesBlock() {
+652:  const values = [
+653:    { title: 'Estrategia primero', body: 'Cada decisión creativa parte de un objetivo claro. La estética sin propósito es decoración.' },
+654:    { title: 'Equipo feliz', body: 'Un entorno de trabajo saludable produce trabajo de mayor calidad. No lo decimos nosotros, lo dice la evidencia.' },
+655:    { title: 'Transparencia total', body: 'Proceso abierto, presupuestos claros y comunicación directa en todas las fases del proyecto.' },
+656:  ]
+657:
+658:  return (
+659:    <section className="py-32 px-6 lg:px-24 max-w-screen-xl mx-auto">
+660:      <div className="grid lg:grid-cols-4 gap-12 items-start">
+661:        <div className="lg:col-span-1">
+662:          <p className="text-xs tracking-[0.25em] uppercase mb-4" style={{ color: 'var(--color-accent)' }}>
+663:            Nuestra forma
+664:          </p>
+665:          <h2
+666:            className="text-3xl sm:text-4xl leading-tight"
+667:            style={{ fontFamily: 'var(--font-display)', fontWeight: 300 }}
+668:          >
+669:            Lo que nos hace distintos
+670:          </h2>
+671:        </div>
+672:        <div className="lg:col-span-3 grid sm:grid-cols-3 gap-8">
+673:          {values.map((v, i) => (
+674:            <div key={i}>
+675:              <div className="w-8 h-px mb-6" style={{ background: 'var(--color-accent)' }} />
+676:              <h3
+677:                className="text-lg font-medium mb-3"
+678:                style={{ fontFamily: 'var(--font-display)', fontWeight: 600 }}
+679:              >
+680:                {v.title}
+681:              </h3>
+682:              <p className="text-sm leading-relaxed" style={{ color: 'var(--color-muted)' }}>
+683:                {v.body}
+684:              </p>
+685:            </div>
+686:          ))}
+687:        </div>
+688:      </div>
+689:    </section>
+690:  )
+691:}
+692:
+693:function ContactSection() {
+694:  const [form, setForm] = useState({ nombre: '', email: '', servicio: '', mensaje: '' })
+695:  const [sent, setSent] = useState(false)
+696:
+697:  const handleSubmit = (e: React.FormEvent) => {
+698:    e.preventDefault()
+699:    setSent(true)
+700:  }
+701:
+702:  return (
+703:    <section
+704:      id="contacto"
+705:      className="py-32 px-6 lg:px-24"
+706:      style={{ background: '#f0ede6' }}
+707:    >
+708:      <div className="max-w-screen-xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
+709:        <div>
+710:          <p className="text-xs tracking-[0.25em] uppercase mb-6" style={{ color: 'var(--color-accent)' }}>
+711:            Contacto
+712:          </p>
+713:          <h2
+714:            className="text-4xl sm:text-5xl leading-tight mb-8"
+715:            style={{ fontFamily: 'var(--font-display)', fontWeight: 300 }}
+716:          >
+717:            Cuéntanos<br /><em>tu proyecto.</em>
+718:          </h2>
+719:          <p className="text-sm leading-relaxed mb-10" style={{ color: 'var(--color-muted)', maxWidth: '360px' }}>
+720:            Nos adaptamos a proyectos de todos los tamaños. Si tienes un reto de comunicación, queremos escucharte.
+721:          </p>
+722:          <div className="flex flex-col gap-4 text-sm" style={{ color: 'var(--color-muted)' }}>
+723:            <span>hola@estudio.com</span>
+724:            <span>+34 937 27 09 07</span>
+725:            <span>Calle Ejemplo 22, 2º 1ª<br />08000 Barcelona</span>
+726:          </div>
+727:        </div>
+728:
+729:        {sent ? (
+730:          <div className="flex flex-col items-center justify-center py-24 text-center">
+731:            <div
+732:              className="w-14 h-14 flex items-center justify-center mb-6"
+733:              style={{ background: 'var(--color-accent)' }}
+734:            >
+735:              <span className="text-white text-2xl">✓</span>
+736:            </div>
+737:            <h3 className="text-xl font-display mb-2" style={{ fontFamily: 'var(--font-display)' }}>¡Mensaje enviado!</h3>
+738:            <p className="text-sm" style={{ color: 'var(--color-muted)' }}>Te contactaremos en menos de 24h.</p>
+739:          </div>
+740:        ) : (
+741:          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+742:            {[
+743:              { key: 'nombre', label: 'Nombre', type: 'text', placeholder: 'Tu nombre' },
+744:              { key: 'email', label: 'Email', type: 'email', placeholder: 'tu@email.com' },
+745:            ].map(f => (
+746:              <div key={f.key} className="flex flex-col gap-1.5">
+747:                <label className="text-xs font-medium tracking-wide uppercase" style={{ color: 'var(--color-muted)' }}>{f.label}</label>
+748:                <input
+749:                  type={f.type}
+750:                  placeholder={f.placeholder}
+751:                  value={form[f.key as keyof typeof form]}
+752:                  onChange={e => setForm(v => ({ ...v, [f.key]: e.target.value }))}
+753:                  required
+754:                  className="w-full px-4 py-3 text-sm outline-none transition-all duration-200"
+755:                  style={{
+756:                    background: '#fff',
+757:                    border: '1px solid var(--color-border)',
+758:                    color: 'var(--color-ink)',
+759:                  }}
+760:                  onFocus={e => e.currentTarget.style.borderColor = 'var(--color-ink)'}
+761:                  onBlur={e => e.currentTarget.style.borderColor = 'var(--color-border)'}
+762:                />
+763:              </div>
+764:            ))}
+765:            <div className="flex flex-col gap-1.5">
+766:              <label className="text-xs font-medium tracking-wide uppercase" style={{ color: 'var(--color-muted)' }}>Servicio</label>
+767:              <select
+768:                value={form.servicio}
+769:                onChange={e => setForm(v => ({ ...v, servicio: e.target.value }))}
+770:                className="w-full px-4 py-3 text-sm outline-none"
+771:                style={{
+772:                  background: '#fff',
+773:                  border: '1px solid var(--color-border)',
+774:                  color: form.servicio ? 'var(--color-ink)' : 'var(--color-muted)',
+775:                  appearance: 'none',
+776:                }}
+777:              >
+778:                <option value="">Selecciona un servicio</option>
+779:                {NAV_ITEMS.map(n => <option key={n.id} value={n.label}>{n.label}</option>)}
+780:              </select>
+781:            </div>
+782:            <div className="flex flex-col gap-1.5">
+783:              <label className="text-xs font-medium tracking-wide uppercase" style={{ color: 'var(--color-muted)' }}>Mensaje</label>
+784:              <textarea
+785:                rows={4}
+786:                placeholder="Cuéntanos en qué podemos ayudarte..."
+787:                value={form.mensaje}
+788:                onChange={e => setForm(v => ({ ...v, mensaje: e.target.value }))}
+789:                className="w-full px-4 py-3 text-sm outline-none resize-none transition-all duration-200"
+790:                style={{
+791:                  background: '#fff',
+792:                  border: '1px solid var(--color-border)',
+793:                  color: 'var(--color-ink)',
+794:                }}
+795:                onFocus={e => e.currentTarget.style.borderColor = 'var(--color-ink)'}
+796:                onBlur={e => e.currentTarget.style.borderColor = 'var(--color-border)'}
+797:              />
+798:            </div>
+799:            <button
+800:              type="submit"
+801:              className="self-start px-8 py-3 text-sm font-medium tracking-wide transition-all duration-200"
+802:              style={{ background: 'var(--color-ink)', color: '#fff' }}
+803:              onMouseEnter={e => e.currentTarget.style.background = 'var(--color-accent)'}
+804:              onMouseLeave={e => e.currentTarget.style.background = 'var(--color-ink)'}
+805:            >
+806:              Enviar mensaje
+807:            </button>
+808:          </form>
+809:        )}
+810:      </div>
+811:    </section>
+812:  )
+813:}
+814:
+815:function Footer() {
+816:  const [email, setEmail] = useState('')
+817:
+818:  return (
+819:    <footer
+820:      className="py-20 px-6 lg:px-24"
+821:      style={{ background: 'var(--color-ink)', color: '#fff' }}
+822:    >
+823:      <div className="max-w-screen-xl mx-auto">
+824:        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+825:          {/* Brand */}
+826:          <div className="lg:col-span-1">
+827:            <span
+828:              className="block text-2xl mb-4"
+829:              style={{ fontFamily: 'var(--font-display)', fontWeight: 700 }}
+830:            >
+831:              Estudio
+832:            </span>
+833:            <p className="text-sm leading-relaxed text-white/50 mb-6 max-w-xs">
+834:              Creatividad al servicio de la comunicación. Publicidad, diseño web y redes sociales.
+835:            </p>
+836:            <div className="flex gap-4">
+837:              {['IG', 'LI', 'FB', 'YT'].map(soc => (
+838:                <a
+839:                  key={soc}
+840:                  href="#"
+841:                  className="text-xs font-medium text-white/40 hover:text-white transition-colors duration-200"
+842:                >
+843:                  {soc}
+844:                </a>
+845:              ))}
+846:            </div>
+847:          </div>
+848:
+849:          {/* Servicios */}
+850:          <div>
+851:            <p className="text-xs tracking-[0.2em] uppercase text-white/30 mb-5">Servicios</p>
+852:            <ul className="flex flex-col gap-3">
+853:              {NAV_ITEMS.map(n => (
+854:                <li key={n.id}>
+855:                  <a
+856:                    href={`#${n.id}`}
+857:                    className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+858:                  >
+859:                    {n.label}
+860:                  </a>
+861:                </li>
+862:              ))}
+863:            </ul>
+864:          </div>
+865:
+866:          {/* Empresa */}
+867:          <div>
+868:            <p className="text-xs tracking-[0.2em] uppercase text-white/30 mb-5">Empresa</p>
+869:            <ul className="flex flex-col gap-3">
+870:              {['Proyectos', 'Nosotros', 'Clientes', 'Blog', 'Kit Digital'].map(l => (
+871:                <li key={l}>
+872:                  <a href="#" className="text-sm text-white/60 hover:text-white transition-colors duration-200">{l}</a>
+873:                </li>
+874:              ))}
+875:            </ul>
+876:          </div>
+877:
+878:          {/* Newsletter */}
+879:          <div>
+880:            <p className="text-xs tracking-[0.2em] uppercase text-white/30 mb-5">Newsletter</p>
+881:            <p className="text-sm text-white/50 mb-4 leading-relaxed">
+882:              Novedades, proyectos y reflexiones sobre comunicación y diseño.
+883:            </p>
+884:            <form
+885:              onSubmit={e => { e.preventDefault(); setEmail('') }}
+886:              className="flex flex-col gap-2"
+887:            >
+888:              <input
+889:                type="email"
+890:                placeholder="tu@email.com"
+891:                value={email}
+892:                onChange={e => setEmail(e.target.value)}
+893:                className="w-full px-4 py-2.5 text-sm outline-none"
+894:                style={{
+895:                  background: 'rgba(255,255,255,0.08)',
+896:                  border: '1px solid rgba(255,255,255,0.15)',
+897:                  color: '#fff',
+898:                }}
+899:              />
+900:              <button
+901:                type="submit"
+902:                className="px-4 py-2.5 text-sm font-medium transition-all duration-200"
+903:                style={{ background: 'var(--color-accent)', color: '#fff' }}
+904:                onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
+905:                onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+906:              >
+907:                Suscribirme
+908:              </button>
+909:            </form>
+910:          </div>
+911:        </div>
+912:
+913:        <div
+914:          className="pt-8 flex flex-col sm:flex-row justify-between items-start gap-4 text-xs text-white/25"
+915:          style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}
+916:        >
+917:          <span>© {new Date().getFullYear()} Estudio. Todos los derechos reservados.</span>
+918:          <div className="flex gap-6">
+919:            {['Aviso legal', 'Privacidad', 'Cookies'].map(l => (
+920:              <a key={l} href="#" className="hover:text-white/50 transition-colors duration-200">{l}</a>
+921:            ))}
+922:          </div>
+923:        </div>
+924:      </div>
+925:    </footer>
+926:  )
+927:}
+928:
+929:export default function App() {
+930:  const [activeSection, setActiveSection] = useState('')
+931:
+932:  useEffect(() => {
+933:    const observer = new IntersectionObserver(
+934:      entries => {
+935:        entries.forEach(e => {
+936:          if (e.isIntersecting) setActiveSection(e.target.id)
+937:        })
+938:      },
+939:      { threshold: 0.3 }
+940:    )
+941:    NAV_ITEMS.forEach(item => {
+942:      const el = document.getElementById(item.id)
+943:      if (el) observer.observe(el)
+944:    })
+945:    return () => observer.disconnect()
+946:  }, [])
+947:
+948:  return (
+949:    <div style={{ background: 'var(--color-paper)' }}>
+950:      <Nav activeSection={activeSection} />
+951:      <HeroSlider />
+952:      <AboutBlock />
+953:      <ProjectsGrid />
+954:      <ServicesSection />
+955:      <ClientsStrip />
+956:      <ValuesBlock />
+957:      <ContactSection />
+958:      <Footer />
+959:    </div>
+960:  )
+961:}
+
+(End of file — 961 lines.)

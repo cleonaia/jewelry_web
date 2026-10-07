@@ -1,0 +1,12 @@
+{
+  "title": "Nou Sol | Centro de estética en Sabadell",
+  "language": "es",
+  "description": "Centro de estética avanzada en Sabadell. Tratamientos faciales y corporales, UVA ISOItalia®, INDIBA®, láser, WONDER® y EVO DEFINITIVE®.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
